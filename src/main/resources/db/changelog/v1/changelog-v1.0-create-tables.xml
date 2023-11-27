@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2023-11-27-create_categories_table" author="Samadov Nicat">
+        <createTable tableName="categories">
+            <column name="id" type="char(32)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-11-28-create_accounts_table" author="Samadov Nicat">
+        <createTable tableName="accounts">
+            <column name="id" type="char(32)" >
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="username" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_date" type="timestamp without time zone"/>
+            <column name="update_date" type="timestamp without time zone"/>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="2023-11-28-create_users_table" author="Samadov Nicat">
+        <createTable tableName="users">
+            <column name="id" type="char(32)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)"/>
+            <column name="surname" type="varchar(50)"/>
+            <column name="birth_date" type="timestamp without time zone"/>
+            <column name="contact_number" type="varchar(20)"/>
+            <column name="address" type="text"/>
+            <column name="account_id" type="char(32)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="users" baseColumnNames="account_id" constraintName="fk_accounts_users" referencedTableName="accounts"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+
+    <changeSet id="2023-11-27-create_tasks_table" author="Samadov Nicat">
+        <createTable tableName="tasks">
+            <column name="id" type="char(32)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="description" type="varchar(50)"/>
+            <column name="priority" type="varchar(50)"/>
+            <column name="deadline" type="timestamp without time zone"/>
+            <column name="status" type="varchar(50)"/>
+            <column name="create_date" type="timestamp without time zone"/>
+            <column name="update_date" type="timestamp without time zone"/>
+            <column name="user_id" type="char(32)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="tasks" baseColumnNames="user_id" constraintName="fk_tasks_users" referencedTableName="users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="2023-11-27-create_tasks_categories_table" author="Samadov Nicat">
+        <createTable tableName="tasks_categories">
+            <column name="id" type="char(32)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="task_id" type="char(32)"/>
+            <column name="category_id" type="char(32)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="tasks_categories" baseColumnNames="task_id" constraintName="fk_tasks_categories_tasks" referencedTableName="tasks"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="tasks_categories" baseColumnNames="category_id" constraintName="fk_tasks_categories_categories" referencedTableName="categories"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+
+</databaseChangeLog>
