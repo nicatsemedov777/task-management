@@ -3,7 +3,9 @@ package az.iktlab.taskmanagement.dao;
 import az.iktlab.taskmanagement.dao.generator.IdGenerator;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -25,7 +27,9 @@ public class User {
 
     private String name;
     private String surname;
-    private String address;
+    private String username;
+    private String email;
+    private String password;
 
     @Column(name = "birth_date")
     private LocalDateTime birthAt;
@@ -35,4 +39,15 @@ public class User {
 
     @OneToMany
     private Set<Task> taskSet;
+
+    @CreationTimestamp
+    @Column(name = "create_date")
+    private LocalDateTime createAt;
+
+    @UpdateTimestamp
+    @Column(name = "update_date")
+    private LocalDateTime updatedAt;
+
+    @Builder.Default
+    private Boolean isDeleted = false;
 }

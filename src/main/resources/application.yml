@@ -14,5 +14,27 @@ spring:
         format_sql: true
         default_schema: ${TASK_MANAGEMENT_DB_SCHEMA}
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     open-in-view:
+
+security:
+  auth:
+    whitelist: >
+      /swagger-resources,
+      /swagger-resources/**,
+      /configuration/ui,  
+      /configuration/security,
+      /swagger-ui.html,
+      /webjars/**,
+      /api/public/**,
+      /v3/api-docs/**,
+      /v3/api-docs,
+      /swagger-ui/**,
+      /v2/api-docs,
+      /api/v1/public/**,
+      /ws-registration/**,
+      /api/v1/users/sign-up,
+      /api/v1/users/sign-in
+
+  jwt:
+    secret-key: ${TASK_MANAGEMENT_JWT_SECRET_KEY}

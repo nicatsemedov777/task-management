@@ -36,7 +36,6 @@ public class Task {
     @Column(name = "deadline")
     private LocalDateTime deadline;
 
-    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
@@ -51,4 +50,7 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    private Category category;
 }

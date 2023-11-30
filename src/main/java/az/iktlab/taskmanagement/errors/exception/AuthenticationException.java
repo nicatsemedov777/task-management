@@ -1,4 +1,4 @@
-package az.iktlab.taskmanagement.error.exception;
+package az.iktlab.taskmanagement.errors.exception;
 
 public class AuthenticationException extends RuntimeException{
     public AuthenticationException() {

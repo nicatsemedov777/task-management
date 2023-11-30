@@ -13,25 +13,6 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="2023-11-28-create_accounts_table" author="Samadov Nicat">
-        <createTable tableName="accounts">
-            <column name="id" type="char(32)" >
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="username" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="email" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="password" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="create_date" type="timestamp without time zone"/>
-            <column name="update_date" type="timestamp without time zone"/>
-        </createTable>
-
-    </changeSet>
 
     <changeSet id="2023-11-28-create_users_table" author="Samadov Nicat">
         <createTable tableName="users">
@@ -40,14 +21,16 @@
             </column>
             <column name="name" type="varchar(50)"/>
             <column name="surname" type="varchar(50)"/>
+            <column name="username" type="varchar(50)"/>
+            <column name="email" type="varchar(50)"/>
+            <column name="password" type="varchar(500)"/>
             <column name="birth_date" type="timestamp without time zone"/>
             <column name="contact_number" type="varchar(20)"/>
             <column name="address" type="text"/>
-            <column name="account_id" type="char(32)"/>
+            <column name="create_date" type="timestamp without time zone"/>
+            <column name="update_date" type="timestamp without time zone"/>
+            <column name="is_deleted" type="boolean"/>
         </createTable>
-
-        <addForeignKeyConstraint baseTableName="users" baseColumnNames="account_id" constraintName="fk_accounts_users" referencedTableName="accounts"
-                                 referencedColumnNames="id"/>
     </changeSet>
 
 
