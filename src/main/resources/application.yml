@@ -16,6 +16,17 @@ spring:
     hibernate:
       ddl-auto: none
     open-in-view:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${TASK_MANAGEMENT_HOST_EMAIL}
+    password: ${TASK_MANAGEMENT_HOST_EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 security:
   auth:
@@ -33,8 +44,7 @@ security:
       /v2/api-docs,
       /api/v1/public/**,
       /ws-registration/**,
-      /api/v1/users/sign-up,
-      /api/v1/users/sign-in
+      /api/v1/users/**
 
   jwt:
     secret-key: ${TASK_MANAGEMENT_JWT_SECRET_KEY}

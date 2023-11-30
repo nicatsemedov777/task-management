@@ -2,6 +2,8 @@ package az.iktlab.taskmanagement.controller;
 
 import az.iktlab.taskmanagement.model.JWTToken;
 import az.iktlab.taskmanagement.model.request.UserCreateRequest;
+import az.iktlab.taskmanagement.model.request.UserRecoverAccountOTPRequest;
+import az.iktlab.taskmanagement.model.request.UserRecoverAccountRequest;
 import az.iktlab.taskmanagement.model.request.UserSignInRequest;
 import az.iktlab.taskmanagement.service.UserService;
 import jakarta.validation.Valid;
@@ -21,6 +23,16 @@ public class UserController {
     @PostMapping("/sign-in")
     public JWTToken signIn(@RequestBody @Valid UserSignInRequest userSignInRequest) {
         return userService.signIn(userSignInRequest);
+    }
+
+    @PostMapping("/recover")
+    public void sendOTP(@RequestBody @Valid UserRecoverAccountRequest userRecoverAccountRequest) {
+        userService.sendOTP(userRecoverAccountRequest);
+    }
+
+    @PostMapping("/recover/otp")
+    public void recover(@RequestBody @Valid UserRecoverAccountOTPRequest userRecoverAccountOTPRequest) {
+        userService.recover(userRecoverAccountOTPRequest);
     }
 
 }
