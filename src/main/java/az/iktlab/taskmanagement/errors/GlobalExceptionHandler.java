@@ -1,6 +1,7 @@
 package az.iktlab.taskmanagement.errors;
 
 import az.iktlab.taskmanagement.errors.exception.AuthenticationException;
+import az.iktlab.taskmanagement.errors.exception.OTPSessionExpiredException;
 import az.iktlab.taskmanagement.errors.exception.ResourceAlreadyExistException;
 import az.iktlab.taskmanagement.errors.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceAlreadyExistException.class)
     public ResponseEntity<ErrorResponse> handleResourceAlreadyExistsException(ResourceAlreadyExistException e) {
         return new ResponseEntity<>(new ErrorResponse(HttpStatus.CONFLICT,e.getMessage()),HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(OTPSessionExpiredException.class)
+    public ResponseEntity<ErrorResponse> handleOTPSessionExpiredException(OTPSessionExpiredException e) {
+        return new ResponseEntity<>(new ErrorResponse(HttpStatus.NOT_FOUND,e.getMessage()),HttpStatus.NOT_FOUND);
     }
 
 }

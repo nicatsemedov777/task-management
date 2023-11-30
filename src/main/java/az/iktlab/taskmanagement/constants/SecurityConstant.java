@@ -14,4 +14,6 @@ public class SecurityConstant {
     @Value("${security.jwt.secret-key}")
     private String secretKey;
 
+    @Value("${spring.mail.username}")
+    private String email;
 }

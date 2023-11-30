@@ -64,5 +64,17 @@
                                  referencedColumnNames="id"/>
     </changeSet>
 
+    <changeSet id="2023-11-30-create_otp_sessions_table" author="Samadov Nicat">
+        <createTable tableName="otp-sessions">
+            <column name="id" type="char(32)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="create_date" type="timestamp without time zone"/>
+            <column name="user_id" type="char(32)"/>
+            <column name="is_used" type="bool"/>
+            <column name="otp_code" type="char(6)"/>
+        </createTable>
+    </changeSet>
+
 
 </databaseChangeLog>
