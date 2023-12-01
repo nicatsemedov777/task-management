@@ -48,3 +48,7 @@ security:
 
   jwt:
     secret-key: ${TASK_MANAGEMENT_JWT_SECRET_KEY}
+
+ngrok:
+  enabled: true
+  auth-token:   2YxKV0V0jvk0oldRGvolCjez0gP_4dFRv2a1y3WGTLXVJucDU
