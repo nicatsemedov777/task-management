@@ -28,7 +28,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
                             auth.requestMatchers(securityConstants.getWhiteList()).permitAll();
                             auth.anyRequest().authenticated();
-
                         }
                 ).exceptionHandling(h -> h.authenticationEntryPoint((request, response, authException) -> {
                     if (response.getStatus() == 200) {
