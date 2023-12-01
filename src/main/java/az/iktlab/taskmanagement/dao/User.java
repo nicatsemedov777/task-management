@@ -8,7 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -37,8 +37,8 @@ public class User {
     @Column(name = "contact_number")
     private String contactNumber;
 
-    @OneToMany
-    private Set<Task> taskSet;
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks;
 
     @CreationTimestamp
     @Column(name = "create_date")

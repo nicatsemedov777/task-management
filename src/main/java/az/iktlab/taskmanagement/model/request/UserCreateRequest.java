@@ -38,5 +38,6 @@ public class UserCreateRequest {
 
     private String address;
     private LocalDateTime birthAt;
+    private Boolean isRememberMe;
 
 }

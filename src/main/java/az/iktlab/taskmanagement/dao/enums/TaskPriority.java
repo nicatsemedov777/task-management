@@ -7,5 +7,21 @@ public enum TaskPriority {
     MAJOR,
     HIGH,
     URGENT,
-    BLOCKER
+    BLOCKER;
+
+    public static boolean match(String text) {
+        for (var task : TaskPriority.values()) {
+            if (task.name().equals(text))
+                return true;
+        }
+        return false;
+    }
+
+    public static TaskPriority getByLabel(String text) {
+        for (var task : TaskPriority.values()) {
+            if (task.name().equals(text))
+                return task;
+        }
+        return null;
+    }
 }

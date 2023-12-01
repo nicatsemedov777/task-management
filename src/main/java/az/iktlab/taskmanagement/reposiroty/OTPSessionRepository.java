@@ -9,9 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface OTPSessionRepository extends JpaRepository<OTPSession,String> {
-
     @Query("Select o from OTPSession o where o.otpCode = ?1 and o.userId=?2 and o.isUsed=false")
     Optional<OTPSession> findByOtpCodeAndUserIdAndIsUsedFalse(String otpCode, String userId);
-
-
 }

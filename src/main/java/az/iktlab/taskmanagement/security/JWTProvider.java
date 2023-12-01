@@ -26,9 +26,9 @@ public class JWTProvider {
                 .build();
     }
 
-    public JWTToken getJWTToken(String userId) {
+    public JWTToken getJWTToken(String userId,Boolean isRememberMe) {
         Date createDate = DateHelper.now();
-        Date expirationDate = getExpirationDate();
+        Date expirationDate = getExpirationDate(isRememberMe?Integer.MAX_VALUE:3);
         String jwtToken = JWT
                 .create()
                 .withSubject("Task Management")
@@ -38,6 +38,11 @@ public class JWTProvider {
                 .withIssuer("Task-Management-System")
                 .sign(Algorithm.HMAC256(securityConstants.getSecretKey()));
 
+        return buildJWTToken(jwtToken, createDate, expirationDate);
+    }
+
+
+    private static JWTToken buildJWTToken(String jwtToken, Date createDate, Date expirationDate) {
         return JWTToken.builder()
                 .token(jwtToken)
                 .createDate(createDate.getTime())
@@ -51,9 +56,9 @@ public class JWTProvider {
     }
 
 
-    private Date getExpirationDate() {
+    private Date getExpirationDate(Integer amount) {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.HOUR, 3);
+        calendar.add(Calendar.HOUR, amount);
         return calendar.getTime();
     }
 

@@ -10,6 +10,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(50)"/>
+            <column name="is_deleted" type="boolean"/>
         </createTable>
     </changeSet>
 
@@ -39,6 +40,7 @@
             <column name="id" type="char(32)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="name" type="varchar(50)"/>
             <column name="description" type="varchar(50)"/>
             <column name="priority" type="varchar(50)"/>
             <column name="deadline" type="timestamp without time zone"/>
@@ -46,21 +48,12 @@
             <column name="create_date" type="timestamp without time zone"/>
             <column name="update_date" type="timestamp without time zone"/>
             <column name="user_id" type="char(32)"/>
+            <column name="category_id" type="char(32)"/>
+            <column name="is_completed" type="boolean"/>
         </createTable>
         <addForeignKeyConstraint baseTableName="tasks" baseColumnNames="user_id" constraintName="fk_tasks_users" referencedTableName="users"
                                  referencedColumnNames="id"/>
-    </changeSet>
-    <changeSet id="2023-11-27-create_tasks_categories_table" author="Samadov Nicat">
-        <createTable tableName="tasks_categories">
-            <column name="id" type="char(32)">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="task_id" type="char(32)"/>
-            <column name="category_id" type="char(32)"/>
-        </createTable>
-        <addForeignKeyConstraint baseTableName="tasks_categories" baseColumnNames="task_id" constraintName="fk_tasks_categories_tasks" referencedTableName="tasks"
-                                 referencedColumnNames="id"/>
-        <addForeignKeyConstraint baseTableName="tasks_categories" baseColumnNames="category_id" constraintName="fk_tasks_categories_categories" referencedTableName="categories"
+        <addForeignKeyConstraint baseTableName="tasks" baseColumnNames="category_id" constraintName="fk_category_task" referencedTableName="categories"
                                  referencedColumnNames="id"/>
     </changeSet>
 
@@ -74,6 +67,12 @@
             <column name="is_used" type="bool"/>
             <column name="otp_code" type="char(6)"/>
         </createTable>
+    </changeSet>
+
+    <changeSet id="2023-11-30-add_is_deleted_column_to_task_table" author="Samadov Nicat">
+        <addColumn tableName="tasks">
+            <column name="is_deleted" type="boolean"/>
+        </addColumn>
     </changeSet>
 
 

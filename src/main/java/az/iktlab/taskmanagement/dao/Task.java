@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder
+@SQLRestriction("is_deleted = false")
 public class Task {
 
     @Id
@@ -40,11 +42,11 @@ public class Task {
     private TaskStatus status;
 
     @CreationTimestamp
-    @Column(name = "created_at")
+    @Column(name = "create_date")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "updated_at")
+    @Column(name = "update_date")
     private LocalDateTime updatedAt;
 
     @ManyToOne
@@ -53,4 +55,12 @@ public class Task {
 
     @ManyToOne
     private Category category;
+
+    @Builder.Default
+    @Column(name = "is_deleted")
+    private Boolean isDeleted = false;
+
+    @Builder.Default
+    @Column(name = "is_completed")
+    private Boolean isCompleted = false;
 }

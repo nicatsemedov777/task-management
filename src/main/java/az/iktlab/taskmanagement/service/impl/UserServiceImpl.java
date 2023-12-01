@@ -19,7 +19,6 @@ import az.iktlab.taskmanagement.reposiroty.OTPSessionRepository;
 import az.iktlab.taskmanagement.reposiroty.UserRepository;
 import az.iktlab.taskmanagement.security.JWTProvider;
 import az.iktlab.taskmanagement.service.UserService;
-import az.iktlab.taskmanagement.util.EmailMatcher;
 import az.iktlab.taskmanagement.util.OTPGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,7 +49,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         eventPublisher.publishEvent(getEvent(userCreateRequest, user));
 
-        return jwtProvider.getJWTToken(user.getId());
+        return jwtProvider.getJWTToken(user.getId(), userCreateRequest.getIsRememberMe());
     }
 
     private static RegistrationCompleteNotificationEvent getEvent(UserCreateRequest userCreateRequest, User user) {
@@ -62,21 +61,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public JWTToken signIn(UserSignInRequest userSignInRequest) {
-        boolean isEmail = EmailMatcher.match(userSignInRequest.getUsernameOrEmail());
-        User user;
-        if (isEmail) {
-            user = userRepository.findByEmailAndIsDeletedFalse(userSignInRequest.getUsernameOrEmail())
-                    .orElseThrow(() -> new ResourceNotFoundException("User is not found with this email"));
-        } else {
-            user = userRepository.findByUsernameAndIsDeletedFalse(userSignInRequest.getUsernameOrEmail())
-                    .orElseThrow(() -> new ResourceNotFoundException("User is not found with this username"));
-        }
-        boolean isTrue = passwordEncoder.matches(userSignInRequest.getPassword(), user.getPassword());
-        if (isTrue)
-            return jwtProvider.getJWTToken(user.getId());
+        User user = userRepository.findByEmailAndIsDeletedFalse(userSignInRequest.getEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("User is not found with this email"));
+        boolean isMatch = passwordEncoder.matches(userSignInRequest.getPassword(), user.getPassword());
 
+        if (isMatch)
+            return jwtProvider.getJWTToken(user.getId(), userSignInRequest.getIsRememberMe());
         throw new AuthenticationException("Bad Credentials");
     }
+
 
     @Override
     public void sendOTP(UserRecoverAccountRequest userRecoverAccountRequest) {
